@@ -14,6 +14,7 @@ connectDB();
 // Router files
 import shop from './routes/shop';
 import admin from './routes/admin';
+import product from './routes/product';
 
 const app = express();
 
@@ -26,13 +27,6 @@ if ( process.env.NODE_ENV === 'development' ) {
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 
-// Static files
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Views setup
-app.set('view engine', 'pug');
-app.set('views', path.join(__dirname, './views'));
-
 // Settings
 app.set('port', process.env.PORT || 3000);
 app.set('node_env', process.env.NODE_ENV);
@@ -41,6 +35,7 @@ app.set('node_env', process.env.NODE_ENV);
 const corsOpts = { origin: process.env.CORS_ORIGIN }
 
 // Mount routers
+app.use('/api/v1/product', cors(corsOpts), product);
 app.use('/api/v1/shop', cors(corsOpts), shop);
 app.use('/api/v1/admin', cors(corsOpts), admin);
 
