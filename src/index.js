@@ -22,6 +22,17 @@ if ( process.env.NODE_ENV === 'development' ) {
   app.use(morgan('dev'));
 }
 
+// Body parser
+app.use(express.urlencoded({extended: false}));
+app.use(express.json());
+
+// Static files
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Views setup
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, './views'));
+
 // Settings
 app.set('port', process.env.PORT || 3000);
 app.set('node_env', process.env.NODE_ENV);
